@@ -39,5 +39,12 @@ public class Person {
         public void setDateOfBirth(LocalDate dateOfBirth) {
             this.dateOfBirth = dateOfBirth;
         }
+
+    @Override
+    public String toString() {
+        return "Id = " + id +
+                ", Name = '" + name + '\'' +
+                ", Date of Birth = " + dateOfBirth.toString("dd-MMMM-yyyy");
+    }
 }
 

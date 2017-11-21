@@ -8,6 +8,10 @@ public class PersonRepository {
         this.count = 0;
     }
 
+    /**
+     * Appends the specified Person element to the end of array
+     * @param person element to be appended to this array
+     */
     void insert(Person person) {
         if (count == 0) {
             personList = new Person[1];
@@ -22,9 +26,12 @@ public class PersonRepository {
             count++;
             this.personList = newList;
         }
-
     }
 
+    /**
+     * Removes the Person element with specified id from the array
+     * @param id Person id to search for
+     */
     void remove(int id) {
         boolean found = false;
         int k = 0;
@@ -43,17 +50,27 @@ public class PersonRepository {
             for(int i=k+1; i< count; i++){
                 newList[i-1] = personList[i];
             }
+            count--;
             personList = newList;
         }
     }
 
+    /**
+     * Returns an Array of Persons
+     * @return Array of Persons
+     */
     Person[] getList() {
         return personList;
     }
 
+    /**
+     *  Prints an Array of Person objects
+     *  Terminates the line after each Person object
+     */
     void printList(){
         for(Person p: personList){
-            System.out.println(p.getName());
+            System.out.println(p);
+ //           System.out.println(p.getName());
         }
     }
 }
