@@ -1,15 +1,17 @@
 import org.joda.time.LocalDate;
 
+import java.util.UUID;
+
 public class Person {
 
         private int id;
         private String name;
         private LocalDate dateOfBirth;
 
-        public Person(int id, String name, LocalDate dateOfBirth) {
+        public Person(int id, String name, String dateOfBirth) {
             this.id = id;
             this.name = name;
-            this.dateOfBirth = dateOfBirth;
+            this.dateOfBirth = strToDate(dateOfBirth);
         }
 
         public int getAge(){
@@ -40,11 +42,14 @@ public class Person {
             this.dateOfBirth = dateOfBirth;
         }
 
+        private LocalDate strToDate(String date){
+            return LocalDate.parse(date);
+        }
     @Override
     public String toString() {
         return "Id = " + id +
                 ", Name = '" + name + '\'' +
-                ", Date of Birth = " + dateOfBirth.toString("dd-MMMM-yyyy");
+                ", Date of Birth = " + dateOfBirth.toString("dd MMMM yyyy");
     }
 }
 

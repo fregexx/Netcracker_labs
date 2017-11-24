@@ -1,35 +1,39 @@
+import java.util.Arrays;
+
 public class PersonRepository {
 
     private Person[] personList;
-    private int count;
+    private int size;
 
     public PersonRepository() {
         this.personList = null;
-        this.count = 0;
+        this.size = 0;
     }
 
     /**
      * Appends the specified Person element to the end of array
+     *
      * @param person element to be appended to this array
      */
     void insert(Person person) {
-        if (count == 0) {
+        if (size == 0) {
             personList = new Person[1];
-            count++;
+            size++;
             personList[0] = person;
         } else {
-            Person[] newList = new Person[count + 1];
+            Person[] newList = new Person[size + 1];
             for (int i = 0; i < personList.length; i++) {
                 newList[i] = personList[i];
             }
-            newList[count] = person;
-            count++;
+            newList[size] = person;
+            size++;
             this.personList = newList;
         }
     }
 
     /**
      * Removes the Person element with specified id from the array
+     *
      * @param id Person id to search for
      */
     void remove(int id) {
@@ -43,20 +47,21 @@ public class PersonRepository {
             k++;
         }
         if (found) {
-            Person[] newList = new Person[count - 1];
+            Person[] newList = new Person[size - 1];
             for (int i = 0; i < k; i++) {
                 newList[i] = personList[i];
             }
-            for(int i=k+1; i< count; i++){
-                newList[i-1] = personList[i];
+            for (int i = k + 1; i < size; i++) {
+                newList[i - 1] = personList[i];
             }
-            count--;
+            size--;
             personList = newList;
         }
     }
 
     /**
      * Returns an Array of Persons
+     *
      * @return Array of Persons
      */
     Person[] getList() {
@@ -64,13 +69,35 @@ public class PersonRepository {
     }
 
     /**
-     *  Prints an Array of Person objects
-     *  Terminates the line after each Person object
+     * Prints an Array of Person objects
+     * Terminates the line after each Person object
      */
-    void printList(){
-        for(Person p: personList){
+    void printList() {
+        for (Person p : personList) {
             System.out.println(p);
- //           System.out.println(p.getName());
         }
     }
+
+    void sort(IPersonComparator comparator) {
+        for (int i = size - 1; i > 0; i--) {
+            for (int j = 0; j < i; j++) {
+                if (comparator.compare(personList[j], personList[j + 1])) {
+                    Person p = personList[j];
+                    personList[j] = personList[j + 1];
+                    personList[j + 1] = p;
+                }
+            }
+        }
+    }
+
+    /**
+     * Sorts the specified array of objects according to the order induced by
+     * the specified comparator.
+     * @param sorter to determine the sorting method
+     * @param comparator to determine the ordering variable
+     */
+    void sortByParams(IPersonListSorter sorter, IPersonComparator comparator) {
+        this.personList = sorter.sort(this.personList, this.size, comparator);
+    }
+
 }
