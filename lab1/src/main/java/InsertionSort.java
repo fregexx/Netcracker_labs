@@ -1,11 +1,11 @@
 public class InsertionSort implements IPersonListSorter {
 
     @Override
-    public Person[] sort(Person[] personList, int size, IPersonComparator comparator) {
+    public Person[] sort(Person[] personList, IPersonComparator comparator) {
         int temp;
-        for (int i = 1; i < size; i++) {
+        for (int i = 1; i < personList.length; i++) {
             for (int j = i; j > 0; j--) {
-                if (comparator.compare(personList[j - 1], personList[j])) {
+                if (comparator.compare(personList[j - 1], personList[j]) > 0) {
                     Person tmp = personList[j];
                     personList[j] = personList[j - 1];
                     personList[j - 1] = tmp;

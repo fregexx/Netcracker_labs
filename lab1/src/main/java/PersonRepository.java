@@ -81,7 +81,7 @@ public class PersonRepository {
     void sort(IPersonComparator comparator) {
         for (int i = size - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
-                if (comparator.compare(personList[j], personList[j + 1])) {
+                if (comparator.compare(personList[j], personList[j + 1]) > 0) {
                     Person p = personList[j];
                     personList[j] = personList[j + 1];
                     personList[j + 1] = p;
@@ -97,7 +97,17 @@ public class PersonRepository {
      * @param comparator to determine the ordering variable
      */
     void sortByParams(IPersonListSorter sorter, IPersonComparator comparator) {
-        this.personList = sorter.sort(this.personList, this.size, comparator);
+        this.personList = sorter.sort(this.personList, comparator);
+    }
+
+    void find(IPersonFinder finder, Object key){
+        Person[] found =  finder.find(key, this.personList);
+        if(found.length != 0){
+            System.out.println("Найдено "+ found.length + " записей: ");
+            for (Person p : found) {
+                System.out.println(p);
+            }
+        }
     }
 
 }

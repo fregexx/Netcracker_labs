@@ -1,3 +1,3 @@
 public interface IPersonListSorter {
-    Person[] sort(Person[] personList, int size, IPersonComparator comparator);
+    Person[] sort(Person[] personList, IPersonComparator comparator);
 }
