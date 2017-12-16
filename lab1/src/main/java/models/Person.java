@@ -1,4 +1,7 @@
+package models;
+
 import org.joda.time.LocalDate;
+import org.joda.time.Period;
 
 import java.util.UUID;
 
@@ -17,7 +20,8 @@ public class Person {
     }
 
     public int getAge() {
-        return LocalDate.now().getYear() - dateOfBirth.getYear();
+        Period period = new Period(dateOfBirth, LocalDate.now());
+        return period.getYears();
     }
 
     public UUID getUid() {

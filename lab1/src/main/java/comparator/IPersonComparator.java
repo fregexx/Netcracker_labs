@@ -1,4 +1,6 @@
-import java.util.Comparator;
+package comparator;
+
+import models.Person;
 
 /**
  * Compares its two arguments for order.  Returns a negative integer,
