@@ -3,7 +3,7 @@ package utilities;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import sorters.IPersonListSorter;
-import sorters.impls.BubbleSorter;
+import sorters.impls.PersonBubbleSorter;
 
 import java.io.*;
 import java.util.Properties;
@@ -47,6 +47,6 @@ public class Configurator {
             LOGGER.error("Class " + "sorters.impls." + sortProperty + "Sorter not found");
             e.printStackTrace();
         }
-        return new BubbleSorter();
+        return new PersonBubbleSorter();
     }
 }

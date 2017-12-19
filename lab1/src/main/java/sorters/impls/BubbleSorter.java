@@ -1,26 +1,21 @@
 package sorters.impls;
 
-import models.Person;
-import comparator.IPersonComparator;
-import repositories.PersonRepository;
-import sorters.IPersonListSorter;
+import comparator.IComparator;
+import sorters.ISorter;
 
-import java.util.Arrays;
-
-public class BubbleSorter implements IPersonListSorter {
+public class BubbleSorter<T> implements ISorter<T> {
 
     @Override
-    public Person[] sort(Person[] personList, int size, IPersonComparator comparator) {
+    public T[] sort(T[] list, int size, IComparator<T> comparator) {
         for (int i = size - 1; i > 0; i--) {
             for (int j = 0; j < i; j++) {
-                if (comparator.compare(personList[j], personList[j + 1]) > 0) {
-                    Person tmp = personList[j];
-                    personList[j] = personList[j + 1];
-                    personList[j + 1] = tmp;
+                if (comparator.compare(list[j], list[j + 1]) > 0) {
+                    T tmp = list[j];
+                    list[j] = list[j + 1];
+                    list[j + 1] = tmp;
                 }
             }
         }
-        return personList;
+        return list;
     }
 }
-

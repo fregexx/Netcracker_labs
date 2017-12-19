@@ -3,18 +3,17 @@ package models;
 import org.joda.time.LocalDate;
 import org.joda.time.Period;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class Person {
 
-    private UUID uid;
-    private int id;
+    private UUID id;
     private String name;
     private LocalDate dateOfBirth;
 
-    public Person(int id, String name, String dateOfBirth) {
-        this.uid = UUID.randomUUID();
-        this.id = id;
+    public Person(String name, String dateOfBirth) {
+        this.id = UUID.randomUUID();
         this.name = name;
         this.dateOfBirth = strToDate(dateOfBirth);
     }
@@ -24,19 +23,11 @@ public class Person {
         return period.getYears();
     }
 
-    public UUID getUid() {
-        return uid;
-    }
-
-    public void setUid(UUID uid) {
-        this.uid = uid;
-    }
-
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -65,7 +56,23 @@ public class Person {
         return "Id = " + id +
                 ", Name = '" + name + '\'' +
                 ", Date of Birth = " + dateOfBirth.toString("dd MMMM yyyy") +
-                ", UID = " + uid;
+                ", UID = " + id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(id, person.id) &&
+                Objects.equals(name, person.name) &&
+                Objects.equals(dateOfBirth, person.dateOfBirth);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, name, dateOfBirth);
     }
 }
 
