@@ -1,4 +1,4 @@
-
+import Annotations.Injector;
 import models.Car;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,30 +18,36 @@ public class CarRepositoryTest {
     private Car p6;
 
     @Before
-    public void initData(){
-        p1 = new Car( "Lada Kalina", "Gray");
-        p2 = new Car( "Lada Granta", "Black");
-        p3 = new Car( "Renault Logan", "Green");
-        p4 = new Car( "Kia Rio", "Red");
-        p5 = new Car( "Chevrolet Camaro", "Orange" );
-        p6 = new Car( "Chevrolet Camaro", "Blue" );
+    public void initData() {
+        p1 = new Car("Lada Kalina", "Gray");
+        p2 = new Car("Lada Granta", "Black");
+        p3 = new Car("Renault Logan", "Green");
+        p4 = new Car("Kia Rio", "Red");
+        p5 = new Car("Chevrolet Camaro", "Orange");
+        p6 = new Car("Chevrolet Camaro", "Blue");
     }
 
     @Test
-    public void testSize(){
+    public void testInjection() {
+        CarRepository actual = (new Injector()).inject(new CarRepository());
+        assertEquals(actual.getSorter().getClass().getSimpleName(), "InsertionSorter");
+    }
+
+    @Test
+    public void testSize() {
         CarRepository repository = new CarRepository();
         repository.add(p1);
         assertTrue(repository.size() == 1);
     }
 
     @Test
-    public void testIsEmpty(){
+    public void testIsEmpty() {
         CarRepository repository = new CarRepository();
         assertTrue(repository.isEmpty());
     }
 
     @Test
-    public void testAdd(){
+    public void testAdd() {
         CarRepository actual = new CarRepository();
         actual.add(p1);
         actual.add(p2);
@@ -52,21 +58,21 @@ public class CarRepositoryTest {
         expected[1] = p2;
         expected[2] = p3;
 
-        assertArrayEquals(actual.getAll(),expected);
+        assertArrayEquals(actual.getAll(), expected);
     }
 
     @Test
-    public void testGet(){
+    public void testGet() {
         CarRepository actual = new CarRepository();
         actual.add(p1);
         actual.add(p2);
         actual.add(p3);
 
-        assertEquals(actual.get(1),p2);
+        assertEquals(actual.get(1), p2);
     }
 
     @Test
-    public void testSet(){
+    public void testSet() {
         CarRepository actual = new CarRepository();
         actual.add(p1);
         actual.add(p2);
@@ -77,11 +83,11 @@ public class CarRepositoryTest {
         expected[0] = p1;
         expected[1] = p5;
         expected[2] = p3;
-        assertArrayEquals(actual.getAll(),expected);
+        assertArrayEquals(actual.getAll(), expected);
     }
 
     @Test
-    public void testContains(){
+    public void testContains() {
         CarRepository actual = new CarRepository();
         actual.add(p1);
         actual.add(p2);
@@ -91,18 +97,18 @@ public class CarRepositoryTest {
     }
 
     @Test
-    public void testIndexOf(){
+    public void testIndexOf() {
         CarRepository actual = new CarRepository();
         actual.add(p1);
         actual.add(p2);
         actual.add(p3);
 
-        assertEquals(actual.indexOf(p3),2);
+        assertEquals(actual.indexOf(p3), 2);
     }
 
     @Test
-    public void testBubbleSortByModel(){
-        CarRepository actual = new CarRepository();
+    public void testBubbleSortByModel() {
+        CarRepository actual = (new Injector()).inject(new CarRepository());
         actual.setSorter(new BubbleSorter());
         actual.add(p1);
         actual.add(p2);
@@ -115,12 +121,12 @@ public class CarRepositoryTest {
         expected[1] = p2;
         expected[2] = p1;
         expected[3] = p3;
-        assertArrayEquals(actual.getAll(),expected);
+        assertArrayEquals(actual.getAll(), expected);
     }
 
     @Test
-    public void testInsertionSortByColor(){
-        CarRepository actual = new CarRepository();
+    public void testInsertionSortByColor() {
+        CarRepository actual = (new Injector()).inject(new CarRepository());
         actual.setSorter(new InsertionSorter());
         actual.add(p1);
         actual.add(p2);
@@ -133,11 +139,11 @@ public class CarRepositoryTest {
         expected[1] = p1;
         expected[2] = p3;
         expected[3] = p4;
-        assertArrayEquals(actual.getAll(),expected);
+        assertArrayEquals(actual.getAll(), expected);
     }
 
     @Test
-    public void testSearchByModel(){
+    public void testSearchByModel() {
         CarRepository actual = new CarRepository();
         actual.add(p5);
         actual.add(p2);
@@ -149,11 +155,11 @@ public class CarRepositoryTest {
         Car[] expected = new Car[10];
         expected[0] = p5;
         expected[1] = p6;
-        assertArrayEquals(found.getAll(),expected);
+        assertArrayEquals(found.getAll(), expected);
     }
 
     @Test
-    public void testSearchByColor(){
+    public void testSearchByColor() {
         CarRepository actual = new CarRepository();
         actual.add(p1);
         actual.add(p2);
@@ -165,6 +171,6 @@ public class CarRepositoryTest {
         Car[] expected = new Car[10];
         expected[0] = p1;
 
-        assertArrayEquals(found.getAll(),expected);
+        assertArrayEquals(found.getAll(), expected);
     }
 }

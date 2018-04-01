@@ -1,11 +1,13 @@
 package repositories;
 
+import Annotations.Inject;
 import sorters.ISorter;
 
 import java.util.Iterator;
 
 public abstract class Repository<T> implements IRepository<T>, Iterable<T> {
 
+    @Inject
     protected ISorter sorter;
 
     protected Object[] list;
@@ -48,7 +50,7 @@ public abstract class Repository<T> implements IRepository<T>, Iterable<T> {
             list[size++] = item;
         } else {
             if (MAX_CAPACITY - size > 0) {
-                Object[] newList = new Object[size+10];
+                Object[] newList = new Object[size + 10];
                 for (int i = 0; i < size; i++) {
                     newList[i] = list[i];
                 }
@@ -93,7 +95,7 @@ public abstract class Repository<T> implements IRepository<T>, Iterable<T> {
      */
     public T get(int index) {
         if (index < size) {
-            return (T)list[index];
+            return (T) list[index];
         } else {
             return null;
         }
@@ -105,15 +107,15 @@ public abstract class Repository<T> implements IRepository<T>, Iterable<T> {
      * @return Array of items
      */
     public T[] getAll() {
-        return (T[])list;
+        return (T[]) list;
     }
 
     /**
      * Replaces the element at the specified position in this list with
      * the specified element.
      *
-     * @param index  index of the element to replace
-     * @param item element to be stored at the specified position
+     * @param index index of the element to replace
+     * @param item  element to be stored at the specified position
      * @return true if success
      */
     @Override
@@ -151,12 +153,21 @@ public abstract class Repository<T> implements IRepository<T>, Iterable<T> {
     }
 
     /**
-     * Set sorting method to the repository
+     * Sets sorting method to the repository
      *
      * @param sorter
      */
     public void setSorter(ISorter sorter) {
         this.sorter = sorter;
+    }
+
+    /**
+     * Gets sorting method of the repository
+     *
+     * @return sorter
+     */
+    public ISorter getSorter() {
+        return this.sorter;
     }
 
     @Override
@@ -175,7 +186,7 @@ public abstract class Repository<T> implements IRepository<T>, Iterable<T> {
 
         @Override
         public T next() {
-            return (T)list[currentIndex++];
+            return (T) list[currentIndex++];
         }
     }
 }

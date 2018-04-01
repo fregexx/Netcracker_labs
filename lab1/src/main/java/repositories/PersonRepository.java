@@ -6,9 +6,9 @@ import models.Person;
 import org.joda.time.LocalDate;
 import sorters.ISorter;
 
-public class PersonRepository extends Repository<Person>{
+public class PersonRepository extends Repository<Person> {
 
-    public PersonRepository(){
+    public PersonRepository() {
         this.list = new Person[DEFAULT_CAPACITY];
         this.size = 0;
     }
@@ -19,10 +19,10 @@ public class PersonRepository extends Repository<Person>{
      * @param checker to determine the sorting property
      * @param value   whose presence in this list is to be tested
      */
-    private PersonRepository search(IChecker checker, Object value){
+    private PersonRepository search(IChecker checker, Object value) {
         PersonRepository found = new PersonRepository();
-        for(Person person: this){
-            if(checker.check(person, value)){
+        for (Person person : this) {
+            if (checker.check(person, value)) {
                 found.add(person);
             }
         }
@@ -36,12 +36,7 @@ public class PersonRepository extends Repository<Person>{
      * @return PersonRepository with list of {@link Person} found
      */
     public PersonRepository searchByName(String value) {
-        return search(new IChecker(){
-            @Override
-            public boolean check(Object p, Object value) {
-                return ((Person)p).getName().equals(value);
-            }
-        }, value);
+        return search((p, value1) -> ((Person) p).getName().equals(value1), value);
     }
 
     /**
@@ -51,7 +46,7 @@ public class PersonRepository extends Repository<Person>{
      * @return PersonRepository with list of {@link Person} found
      */
     public PersonRepository searchByBirthDate(String value) {
-        return search((p, v)-> ((Person)p).getDateOfBirth().equals(LocalDate.parse(value.toString())), value);
+        return search((p, v) -> ((Person) p).getDateOfBirth().equals(LocalDate.parse(value)), value);
     }
 
     /**
@@ -59,12 +54,7 @@ public class PersonRepository extends Repository<Person>{
      * use {@link #setSorter(ISorter)} )} method to determine the sorting method
      */
     public void sortByName() {
-        sorter.sort(list, size, new IComparator<Person>() {
-            @Override
-            public int compare(Person item1, Person item2) {
-                return item1.getName().compareTo(item2.getName());
-            }
-        });
+        sorter.sort(list, size, (IComparator<Person>) (item1, item2) -> item1.getName().compareTo(item2.getName()));
     }
 
     /**
@@ -72,6 +62,6 @@ public class PersonRepository extends Repository<Person>{
      * use {@link #setSorter(ISorter)} )} method to determine the sorting method
      */
     public void sortByBirthdate() {
-        sorter.sort(list, size, (person1,person2)->((Person)person1).getDateOfBirth().compareTo(((Person)person2).getDateOfBirth()));
+        sorter.sort(list, size, (person1, person2) -> ((Person) person1).getDateOfBirth().compareTo(((Person) person2).getDateOfBirth()));
     }
 }

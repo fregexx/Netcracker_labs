@@ -1,28 +1,28 @@
 package sorters.impls;
 
-import comparator.IPersonComparator;
+import comparator.IComparator;
 import models.Person;
-import sorters.IPersonListSorter;
+import sorters.ISorter;
 
-public class SelectionSorter implements IPersonListSorter {
+public class SelectionSorter<T> implements ISorter<T> {
 
     @Override
-    public Person[] sort(Person[] personList, int size, IPersonComparator comparator) {
+    public T[] sort(T[] list, int size, IComparator<T> comparator) {
         for (int i = 0; i < size; i++) {
-            Person min = personList[i];
+            T min = list[i];
             int min_i = i;
             for (int j = i + 1; j < size; j++) {
-                if (comparator.compare(min, personList[j]) > 0) {
-                    min = personList[j];
+                if (comparator.compare(min, list[j]) > 0) {
+                    min = list[j];
                     min_i = j;
                 }
             }
             if (i != min_i) {
-                Person tmp = personList[i];
-                personList[i] = personList[min_i];
-                personList[min_i] = tmp;
+                T tmp = list[i];
+                list[i] = list[min_i];
+                list[min_i] = tmp;
             }
         }
-        return personList;
+        return list;
     }
 }
