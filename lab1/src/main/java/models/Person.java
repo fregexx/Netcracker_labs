@@ -18,6 +18,12 @@ public class Person {
         this.dateOfBirth = strToDate(dateOfBirth);
     }
 
+    public Person(String id, String name, String dateOfBirth) {
+        this.id = UUID.fromString(id);
+        this.name = name;
+        this.dateOfBirth = strToDate(dateOfBirth);
+    }
+
     public int getAge() {
         Period period = new Period(dateOfBirth, LocalDate.now());
         return period.getYears();

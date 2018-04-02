@@ -5,6 +5,7 @@ import comparator.IComparator;
 import models.Person;
 import org.joda.time.LocalDate;
 import sorters.ISorter;
+import xml.XMLWorker;
 
 public class PersonRepository extends Repository<Person> {
 
@@ -63,5 +64,14 @@ public class PersonRepository extends Repository<Person> {
      */
     public void sortByBirthdate() {
         sorter.sort(list, size, (person1, person2) -> ((Person) person1).getDateOfBirth().compareTo(((Person) person2).getDateOfBirth()));
+    }
+
+    public void exportDataToXML(){
+        XMLWorker.toXML(this);
+    }
+
+    public void importDataFromXML(){
+        PersonRepository repository = XMLWorker.fromXML();
+        this.setAll(repository.getAll());
     }
 }

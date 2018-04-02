@@ -127,6 +127,12 @@ public abstract class Repository<T> implements IRepository<T>, Iterable<T> {
         return false;
     }
 
+    @Override
+    public void setAll(T[] list){
+        this.list = list;
+        this.size = list.length;
+    }
+
     /**
      * Returns true if this list contains the specified element.
      *

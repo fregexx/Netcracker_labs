@@ -6,7 +6,6 @@ import sorters.ISorter;
 import sorters.impls.BubbleSorter;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Properties;
 

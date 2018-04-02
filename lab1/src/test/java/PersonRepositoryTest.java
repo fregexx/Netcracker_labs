@@ -28,6 +28,20 @@ public class PersonRepositoryTest {
     }
 
     @Test
+    public void testXMLExportImport(){
+        PersonRepository actual = new PersonRepository();
+        actual.add(p1);
+        actual.add(p2);
+        actual.add(p3);
+        actual.exportDataToXML();
+
+        PersonRepository expected = new PersonRepository();
+        expected.importDataFromXML();
+
+        assertArrayEquals(actual.getAll(), expected.getAll());
+    }
+
+    @Test
     public void testInjection() {
         PersonRepository actual = (new Injector()).inject(new PersonRepository());
         assertEquals(actual.getSorter().getClass().getSimpleName(), "InsertionSorter");
@@ -86,6 +100,19 @@ public class PersonRepositoryTest {
         expected[2] = p3;
 
         assertArrayEquals(actual.getAll(), expected);
+    }
+
+    @Test
+    public void testSetAll() {
+        PersonRepository repository = new PersonRepository();
+
+        Person[] expected = new Person[10];
+        expected[0] = p1;
+        expected[1] = p5;
+        expected[2] = p3;
+        repository.setAll(expected);
+
+        assertArrayEquals(repository.getAll(), expected);
     }
 
     @Test
